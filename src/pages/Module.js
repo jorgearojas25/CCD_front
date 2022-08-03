@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import Layout from "../components/Layout";
 import { Button, Input, Box } from "@mui/material";
 import MediaCard from "../components/Card";

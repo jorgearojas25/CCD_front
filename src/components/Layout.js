@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Box, Container } from "@mui/material";
+import { Container } from "@mui/material";
 import { myTheme } from "../theme/theme";
 
 const Layout = (props) => {
@@ -10,10 +10,10 @@ const Layout = (props) => {
       sx={{
         width: "100vw",
         display: "flex",
-        backgroundColor: myTheme.palette.background.paper,
+        backgroundColor: myTheme.palette.background.default,
       }}
     >
-      <Box>{children}</Box>
+      {children}
     </Container>
   );
 };
