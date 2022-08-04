@@ -10,11 +10,15 @@ import { Box } from "@mui/system";
 import React from "react";
 import Layout from "../../components/Layout";
 import useField from "../../hooks/useField";
-import { useDispatch } from "react-redux";
-import { restSignup } from "../../store/reducers/UserReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { reloadUser, restSignup } from "../../store/reducers/UserReducer";
+import { useNavigate } from "react-router-dom";
 
 const RestaurantSignup = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const registered = useSelector((store) => store.User.userCreated);
 
   const document = useField();
   const password = useField();
@@ -33,6 +37,18 @@ const RestaurantSignup = () => {
       })
     );
   };
+
+  React.useEffect(() => {
+    if (registered) {
+      dispatch(reloadUser());
+      document.setValue("");
+      password.setValue("");
+      name.setValue("");
+      payor.setValue("");
+      imagen.setValue("");
+      navigate("/login", { replace: true });
+    }
+  }, [registered, dispatch]);
 
   return (
     <Layout>

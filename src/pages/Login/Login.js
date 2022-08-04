@@ -10,10 +10,30 @@ import { Box } from "@mui/system";
 import React from "react";
 import Layout from "../../components/Layout";
 import useField from "../../hooks/useField";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../store/reducers/UserReducer";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const userInfo = useSelector((store) => store.User.user);
+
+  const navigate = useNavigate();
+
   const document = useField();
   const password = useField();
+
+  const handleLogin = () => {
+    dispatch(login({ document: document.value, password: password.value }));
+  };
+
+  React.useEffect(() => {
+    console.log(userInfo);
+    if (userInfo?.id_usuario) {
+      navigate("/dashboard", { replace: true });
+    }
+  }, [userInfo, navigate]);
+
   return (
     <Layout>
       <Box
@@ -49,7 +69,7 @@ const Login = () => {
               onChange={document.onChange}
             />
             <TextField
-              id="login-field"
+              id="password-field"
               label="password"
               value={password.value}
               onChange={password.onChange}
@@ -62,7 +82,9 @@ const Login = () => {
               justifyContent: "center",
             }}
           >
-            <Button variant="contained">Log in</Button>
+            <Button variant="contained" onClick={handleLogin}>
+              Log in
+            </Button>
           </CardActions>
         </Card>
       </Box>

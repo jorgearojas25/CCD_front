@@ -10,6 +10,7 @@ const UserSlice = createSlice({
   initialState: {
     loading: "idle",
     user: {},
+    userCreated: false,
   },
   reducers: {
     // actions that modify the state
@@ -18,9 +19,26 @@ const UserSlice = createSlice({
       if (state.loading === "idle") state.loading = "pending";
     },
     setUser(state, action) {
+      console.log(action.payload);
       if (state.loading === "pending") {
         state.loading = "idle";
         state.user = action.payload;
+      }
+    },
+    registerUser(state, action) {
+      if (state.loading === "pending") {
+        state.loading = "idle";
+        state.userCreated = action.payload;
+      }
+    },
+    reloadUser(state) {
+      if (state.userCreated) {
+        state.userCreated = false;
+      }
+    },
+    logout(state) {
+      if (state.user) {
+        state.user = {};
       }
     },
   },
@@ -28,7 +46,7 @@ const UserSlice = createSlice({
 
 const { actions, reducer } = UserSlice;
 
-export const { loading, setUser } = actions;
+export const { loading, setUser, registerUser, reloadUser } = actions;
 
 export const login =
   ({ document, password }) =>
@@ -43,7 +61,7 @@ export const login =
     });
 
     // send API data
-    dispatch(setUser(response.result ? response.entities[0] : {}));
+    dispatch(setUser(response.data.result ? response.data.entities[0] : {}));
   };
 
 export const signup =
@@ -62,7 +80,7 @@ export const signup =
     });
 
     // send API data
-    dispatch(setUser(response.result ? response.entities[0] : {}));
+    dispatch(registerUser(response.data.result ? response.data.result : false));
   };
 
 export const restSignup =
@@ -84,7 +102,7 @@ export const restSignup =
     );
 
     // send API data
-    dispatch(setUser(response.result ? response.entities[0] : {}));
+    dispatch(registerUser(response.data.result ? response.data.result : false));
   };
 
 export default reducer;

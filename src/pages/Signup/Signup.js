@@ -10,11 +10,15 @@ import { Box } from "@mui/system";
 import React from "react";
 import Layout from "../../components/Layout";
 import useField from "../../hooks/useField";
-import { useDispatch } from "react-redux";
-import { signup } from "../../store/reducers/UserReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { reloadUser, signup } from "../../store/reducers/UserReducer";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const registered = useSelector((store) => store.User.userCreated);
 
   const document = useField();
   const password = useField();
@@ -31,6 +35,18 @@ const Signup = () => {
       })
     );
   };
+
+  React.useEffect(() => {
+    if (registered) {
+      dispatch(reloadUser());
+      document.setValue("");
+      password.setValue("");
+      name.setValue("");
+      payor.setValue("");
+      navigate("/login", { replace: true });
+    }
+  }, [registered, dispatch]);
+
   return (
     <Layout>
       <Box
@@ -60,21 +76,21 @@ const Signup = () => {
             </Typography>
             <TextField
               margin="normal"
-              id="login-field"
+              id="nombre-field"
               label="nombre"
               value={name.value}
               onChange={name.onChange}
             />
             <TextField
               margin="normal"
-              id="login-field"
+              id="documento-field"
               label="documento"
               value={document.value}
               onChange={document.onChange}
             />
             <TextField
               margin="normal"
-              id="login-field"
+              id="password-field"
               label="password"
               value={password.value}
               onChange={password.onChange}
@@ -82,7 +98,7 @@ const Signup = () => {
             />
             <TextField
               margin="normal"
-              id="login-field"
+              id="cuenta-field"
               label="cuenta de cobro"
               value={payor.value}
               onChange={payor.onChange}

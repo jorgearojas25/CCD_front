@@ -7,7 +7,7 @@ const useField = () => {
     setValue(e.target.value);
   };
 
-  return { value, onChange };
+  return { value, setValue, onChange };
 };
 
 export default useField;
