@@ -29,7 +29,7 @@ const Login = () => {
 
   React.useEffect(() => {
     console.log(userInfo);
-    if (userInfo?.id_usuario) {
+    if (userInfo?.id_usuario || userInfo?.id_restaurante) {
       navigate("/dashboard", { replace: true });
     }
   }, [userInfo, navigate]);

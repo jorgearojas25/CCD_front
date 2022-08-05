@@ -46,7 +46,7 @@ const UserSlice = createSlice({
 
 const { actions, reducer } = UserSlice;
 
-export const { loading, setUser, registerUser, reloadUser } = actions;
+export const { loading, setUser, registerUser, reloadUser, logout } = actions;
 
 export const login =
   ({ document, password }) =>

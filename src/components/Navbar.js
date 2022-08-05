@@ -183,7 +183,7 @@ const ResponsiveAppBar = () => {
               <Button
                 LinkComponent={Link}
                 to={`login`}
-                key={"1"}
+                key={"loginbutton"}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
@@ -192,7 +192,7 @@ const ResponsiveAppBar = () => {
               <Button
                 LinkComponent={Link}
                 to={`signup`}
-                key={"1"}
+                key={"signupbutton"}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
