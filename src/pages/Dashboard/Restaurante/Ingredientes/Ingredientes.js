@@ -7,7 +7,9 @@ import { GetIngredientes } from "../../../../store/reducers/RestReducer";
 const Ingredientes = () => {
   const dispatch = useDispatch();
 
-  dispatch(GetIngredientes());
+  React.useEffect(() => {
+    dispatch(GetIngredientes());
+  }, [dispatch]);
 
   return (
     <>

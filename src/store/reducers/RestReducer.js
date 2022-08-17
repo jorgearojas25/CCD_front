@@ -11,6 +11,8 @@ const UserSlice = createSlice({
     loading: "idle",
     refreshData: false,
     ingredientes: [],
+    tipoProductos: [],
+    productos: [],
   },
   reducers: {
     // actions that modify the state
@@ -27,12 +29,25 @@ const UserSlice = createSlice({
     setIngredientes(state, action) {
       state.ingredientes = action.payload;
     },
+    setTipoProductos(state, action) {
+      state.tipoProductos = action.payload;
+    },
+    setProductos(state, action) {
+      state.productos = action.payload;
+    },
   },
 });
 
 const { actions, reducer } = UserSlice;
 
-export const { loading, successData, cleanState, setIngredientes } = actions;
+export const {
+  loading,
+  successData,
+  cleanState,
+  setIngredientes,
+  setTipoProductos,
+  setProductos,
+} = actions;
 
 export const AddIngrediente =
   ({ nombre, descripcion, imagen, valor }) =>
@@ -51,6 +66,22 @@ export const AddIngrediente =
     }
   };
 
+export const AddProducto =
+  ({ nombre, descripcion, imagen, valor, tipoProducto, restaurante }) =>
+  async (dispatch) => {
+    const response = await axios.post(config.APIURI + config.PATHS.productos, {
+      nombre: nombre,
+      descripcion: descripcion,
+      imagen: imagen,
+      valor: valor,
+      id_tipo_producto: tipoProducto,
+      id_restaurante: restaurante,
+    });
+    if (response.data.result) {
+      dispatch(successData());
+    }
+  };
+
 export const GetIngredientes = () => async (disptach) => {
   const response = (await axios.get(config.APIURI + config.PATHS.ingredientes))
     .data;
@@ -58,6 +89,26 @@ export const GetIngredientes = () => async (disptach) => {
   if (response.result) {
     response.entities.map((ent) => (ent.id = ent.id_ingrediente));
     disptach(setIngredientes(response.entities));
+  }
+};
+
+export const GetProdcutos = () => async (disptach) => {
+  const response = (await axios.get(config.APIURI + config.PATHS.productos))
+    .data;
+
+  if (response.result) {
+    response.entities.map((ent) => (ent.id = ent.id_producto));
+    disptach(setProductos(response.entities));
+  }
+};
+
+export const GetTipoProductos = () => async (disptach) => {
+  const response = (await axios.get(config.APIURI + config.PATHS.tipoProductos))
+    .data;
+
+  if (response.result) {
+    response.entities.map((ent) => (ent.id = ent.id_tipo_producto));
+    disptach(setTipoProductos(response.entities));
   }
 };
 export default reducer;

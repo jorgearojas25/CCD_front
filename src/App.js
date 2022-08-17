@@ -8,6 +8,8 @@ import Compras from "./pages/Dashboard/Restaurante/Compras/Compras";
 import Ingredientes from "./pages/Dashboard/Restaurante/Ingredientes/Ingredientes";
 import Menus from "./pages/Dashboard/Restaurante/Menus/Menus";
 import Productos from "./pages/Dashboard/Restaurante/Productos/Productos";
+import Carrito from "./pages/Dashboard/Users/Carrito/Carrito";
+import Orden from "./pages/Dashboard/Users/Orders/Orden";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import Module from "./pages/Module";
@@ -39,6 +41,8 @@ function App() {
             <Route path={restaurante.productos} element={<Productos />} />
             <Route path={restaurante.menus} element={<Menus />} />
             <Route path={restaurante.compras} element={<Compras />} />
+            <Route path={user.crearOrden} element={<Orden />} />
+            <Route path={user.procederPago} element={<Carrito />} />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -13,6 +13,7 @@ import { logout } from "../../store/reducers/UserReducer";
 import { Outlet, useNavigate } from "react-router-dom";
 import DrawerHeader from "../../components/DashBoardDrawer/DrawerHeader";
 import DashboardDrawer from "../../components/DashBoardDrawer/DashboardDrawer";
+import { GetTipoProductos } from "../../store/reducers/RestReducer";
 
 const drawerWidth = 240;
 
@@ -55,6 +56,10 @@ const AppBar = styled(MuiAppBar, {
 export default function Dashboard({ rol }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(GetTipoProductos());
+  }, [dispatch]);
 
   const [open, setOpen] = React.useState(false);
   const userInfo = useSelector((store) => store.User.user);

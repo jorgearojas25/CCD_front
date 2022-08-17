@@ -7,6 +7,8 @@ const config = {
     register: "usuario",
     registerRestaurant: "restaurante",
     ingredientes: "ingrediente",
+    tipoProductos: "tipo_producto",
+    productos: "producto",
   },
   NAVIGATION: {
     site: {

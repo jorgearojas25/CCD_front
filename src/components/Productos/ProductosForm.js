@@ -4,30 +4,39 @@ import {
   Card,
   CardActions,
   CardContent,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
   TextField,
   Typography,
 } from "@mui/material";
 import React, { useEffect } from "react";
 import useField from "../../hooks/useField";
 import { useDispatch, useSelector } from "react-redux";
-import { AddIngrediente, cleanState } from "../../store/reducers/RestReducer";
+import { AddProducto, cleanState } from "../../store/reducers/RestReducer";
 
-const IngredientesForm = () => {
+const ProductosForm = () => {
   const dispatch = useDispatch();
   const success = useSelector((state) => state.Rest.refreshData);
+  const tipoProducto = useSelector((state) => state.Rest.tipoProductos);
+  const user = useSelector((state) => state?.User?.user?.id_restaurante);
 
   const nombre = useField();
   const descripcion = useField();
   const imagen = useField();
   const valor = useField();
+  const tipoProd = useField();
 
   const handleAdd = () => {
     dispatch(
-      AddIngrediente({
+      AddProducto({
         nombre: nombre.value,
         descripcion: descripcion.value,
         imagen: imagen.value,
         valor: valor.value,
+        restaurante: user,
+        tipoProducto: tipoProd.value,
       })
     );
   };
@@ -39,6 +48,7 @@ const IngredientesForm = () => {
       descripcion.setValue("");
       imagen.setValue("");
       valor.setValue("");
+      tipoProd.setValue("");
     }
   }, [success]);
 
@@ -57,7 +67,7 @@ const IngredientesForm = () => {
             color="text.primary"
             gutterBottom
           >
-            Nuevo ingrediente
+            Nuevo Producto
           </Typography>
           <TextField
             margin="normal"
@@ -88,6 +98,23 @@ const IngredientesForm = () => {
             onChange={valor.onChange}
             type="number"
           />
+
+          <FormControl sx={{ width: "30%" }} margin="normal">
+            <InputLabel id="tipo-de-producto-select-field">
+              Tipo de producto
+            </InputLabel>
+            <Select
+              labelId="tipo-de-producto-select-field"
+              id="tipoProducto-field"
+              label="Tipo"
+              value={tipoProd.value}
+              onChange={tipoProd.onChange}
+            >
+              {[...tipoProducto]?.map((tipo) => (
+                <MenuItem value={tipo.id}>{tipo.nombre}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </CardContent>
         <CardActions
           style={{
@@ -108,4 +135,4 @@ const IngredientesForm = () => {
   );
 };
 
-export default IngredientesForm;
+export default ProductosForm;
