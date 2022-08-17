@@ -63,7 +63,7 @@ export const restaurantList = [
   },
   {
     name: "Productos",
-    link: restaurante.compras,
+    link: restaurante.productos,
     icon: <CakeIcon />,
   },
   { name: "Menus", link: restaurante.menus, icon: <MenuBookIcon /> },

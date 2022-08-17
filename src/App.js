@@ -4,7 +4,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ResponsiveAppBar from "./components/Navbar";
 import config from "./config";
 import Dashboard from "./pages/Dashboard/Dashboard";
-import Productos from "./pages/Dashboard/Productos/Productos";
+import Compras from "./pages/Dashboard/Restaurante/Compras/Compras";
+import Ingredientes from "./pages/Dashboard/Restaurante/Ingredientes/Ingredientes";
+import Menus from "./pages/Dashboard/Restaurante/Menus/Menus";
+import Productos from "./pages/Dashboard/Restaurante/Productos/Productos";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import Module from "./pages/Module";
@@ -15,7 +18,7 @@ import { myTheme } from "./theme/theme";
 function App() {
   const userInfo = useSelector((store) => store.User.user);
   const { NAVIGATION } = config;
-  const { site } = NAVIGATION;
+  const { site, user, admin, restaurante } = NAVIGATION;
   return (
     <ThemeProvider theme={myTheme}>
       <BrowserRouter>
@@ -32,7 +35,10 @@ function App() {
             path="dashboard"
             element={<Dashboard rol={userInfo?.id_rol || 3} />}
           >
-            <Route index path={"productos"} element={<Productos />} />
+            <Route path={restaurante.ingredientes} element={<Ingredientes />} />
+            <Route path={restaurante.productos} element={<Productos />} />
+            <Route path={restaurante.menus} element={<Menus />} />
+            <Route path={restaurante.compras} element={<Compras />} />
           </Route>
         </Routes>
       </BrowserRouter>
